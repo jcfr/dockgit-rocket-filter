@@ -3,6 +3,9 @@ dockgit-rocket-filter
 
 Dockerized version of `GitRocketFilter <https://github.com/xoofx/GitRocketFilter>`_: Rewrite git branches in a powerful way.
 
+.. |dockgit-rocket-filter| image:: https://badge.imagelayers.io/jcfr/dockgit-rocket-filter:latest.svg
+  :target: https://imagelayers.io/?images=jcfr/dockgit-rocket-filter:latest
+
 Features
 --------
 
