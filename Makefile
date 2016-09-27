@@ -12,7 +12,12 @@ ORG = jcfr
 IMAGE = dockgit-rocket-filter
 
 build:
-	docker build -t $(ORG)/$(IMAGE) .
+	docker build \
+		--build-arg IMAGE=$(IMAGE) \
+		--build-arg VCS_REF=`git rev-parse --short HEAD` \
+		--build-arg VCS_URL=`git config --get remote.origin.url` \
+		--build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
+		-t $(ORG)/$(IMAGE) .
 
 push:
 	docker push $(ORG)/$(IMAGE)
