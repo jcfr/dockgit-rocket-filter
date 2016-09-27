@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FINAL_IMAGE=jcfr/git-rocket-filter
+FINAL_IMAGE=jcfr/dockgit-rocket-filter
 
 #
 # If we are not running via boot2docker
