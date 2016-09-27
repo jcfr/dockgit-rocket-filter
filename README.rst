@@ -6,6 +6,10 @@ Dockerized version of `GitRocketFilter <https://github.com/xoofx/GitRocketFilter
 .. |dockgit-rocket-filter| image:: https://badge.imagelayers.io/jcfr/dockgit-rocket-filter:latest.svg
   :target: https://imagelayers.io/?images=jcfr/dockgit-rocket-filter:latest
 
+jcfr/dockgit-rocket-filter
+  |dockgit-rocket-filter| Dockerized version of GitRocketFilter.
+
+
 Features
 --------
 
