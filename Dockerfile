@@ -3,17 +3,12 @@ MAINTAINER Jean-Christophe Fillion-Robin "jchris.fillionr@kitware.com"
 
 ENV DEBIAN_FRONTEND noninteractive
 
-WORKDIR /usr/share
-
 RUN apt-get update && apt-get -y install \
   mono-complete \
-  unzip && \
-  apt-get -y clean
-
-RUN apt-get update && apt-get -y install \
+  unzip \
   curl \
-  runit && \
-  apt-get -y clean
+  runit \
+  && apt-get -y clean
 
 RUN curl -LO https://github.com/xoofx/GitRocketFilter/releases/download/v1.1.1/git-rocket-filter-v1.1.1.zip && \
   unzip git-rocket-filter-v1.1.1.zip -d git-rocket-filter && \
