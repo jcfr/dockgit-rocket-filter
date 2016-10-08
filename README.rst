@@ -37,8 +37,8 @@ To install the helper script, copy the script `git-rocket-filter` in your `PATH`
   chmod +x ~/bin/git-rocket-filter
 
 
-Maintainance
-------------
+Maintenance
+-----------
 
 To rebuild the image::
 
