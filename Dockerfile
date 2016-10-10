@@ -10,6 +10,8 @@ RUN apt-get update && apt-get -y install \
   runit \
   && apt-get -y clean
 
+WORKDIR /usr/share
+
 RUN curl -LO https://github.com/xoofx/GitRocketFilter/releases/download/v1.1.1/git-rocket-filter-v1.1.1.zip && \
   unzip git-rocket-filter-v1.1.1.zip -d git-rocket-filter && \
   rm git-rocket-filter-v1.1.1.zip
