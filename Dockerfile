@@ -1,18 +1,20 @@
 FROM ubuntu:14.04
 MAINTAINER Jean-Christophe Fillion-Robin "jchris.fillionr@kitware.com"
 
-ENV DEBIAN_FRONTEND noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get -y install \
+RUN \
+  apt-get update && apt-get -y install \
   mono-complete \
   unzip \
   curl \
   runit \
-  && apt-get -y clean
+  rm -rf /var/lib/apt/lists/* && \
+  apt-get clean --yes
 
-WORKDIR /usr/share
-
-RUN curl -LO https://github.com/xoofx/GitRocketFilter/releases/download/v1.1.1/git-rocket-filter-v1.1.1.zip && \
+RUN \
+  cd /usr/share && \
+  curl -LO https://github.com/xoofx/GitRocketFilter/releases/download/v1.1.1/git-rocket-filter-v1.1.1.zip && \
   unzip git-rocket-filter-v1.1.1.zip -d git-rocket-filter && \
   rm git-rocket-filter-v1.1.1.zip
 

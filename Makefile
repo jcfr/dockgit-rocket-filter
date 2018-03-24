@@ -5,19 +5,19 @@
 # Name of the docker executable
 DOCKER = docker
 
-# Docker organization to pull the images from
+# DockerHub organization and repository to pull/push the images from/to
 ORG = jcfr
-
-# Name of image
-IMAGE = dockgit-rocket-filter
+REPO = dockgit-rocket-filter
 
 build:
+	$(eval IMAGEID := $(shell $(DOCKER) images -q $(ORG)/$(REPO)))
 	docker build \
-		--build-arg IMAGE=$(IMAGE) \
+		--build-arg IMAGE=$(REPO) \
 		--build-arg VCS_REF=`git rev-parse --short HEAD` \
 		--build-arg VCS_URL=`git config --get remote.origin.url` \
 		--build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
-		-t $(ORG)/$(IMAGE) .
+		-t $(ORG)/$(REPO) .
+	if [ -n "$(IMAGEID)" ]; then $(DOCKER) rmi "$(IMAGEID)"; fi
 
 push:
-	docker push $(ORG)/$(IMAGE)
+	docker push $(ORG)/$(REPO)
