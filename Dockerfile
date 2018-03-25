@@ -1,5 +1,4 @@
-FROM ubuntu:18.04
-MAINTAINER Jean-Christophe Fillion-Robin "jchris.fillionr@kitware.com"
+FROM ubuntu:18.04 as builder
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -7,8 +6,7 @@ RUN \
   apt-get update && apt-get -y install \
     mono-complete \
     unzip \
-    curl \
-    runit
+    curl
 
 RUN \
   cd /usr/src && \
@@ -31,6 +29,29 @@ RUN \
   #
   xbuild /tv:4.0 /t:Build /fl "/p:Configuration=Release;Platform=Any CPU" && \
   #
+  # Install
+  #
+  mv bin/Release /usr/share/git-rocket-filter && \
+  rm -rf /usr/src/GitRocketFilter && \
+  #
+  # Cleanup
+  #
+  rm -rf /var/lib/apt/lists/* && \
+  apt-get clean --yes
+
+#-------------------------------------------------------------------------------
+FROM ubuntu:18.04
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+COPY --from=builder /usr/share/git-rocket-filter /usr/share/git-rocket-filter
+
+RUN \
+  apt-get update && apt-get -y install \
+    runit \
+    mono-runtime \
+  && \
+  #
   # Install libcurl3 required by 'libgit2-4d6362b.so'
   #
   #   Associated error message was:
@@ -43,16 +64,10 @@ RUN \
   #
   apt-get install -y libcurl3 && \
   #
-  # Install
-  #
-  mv bin/Release /usr/share/git-rocket-filter && \
-  rm -rf /usr/src/GitRocketFilter && \
-  #
   # Cleanup
   #
   rm -rf /var/lib/apt/lists/* && \
   apt-get clean --yes
-
 
 ENTRYPOINT ["/usr/share/git-rocket-filter/entrypoint.sh", "mono", "/usr/share/git-rocket-filter/git-rocket-filter.exe"]
 
@@ -71,4 +86,5 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.url="https://github.com/jcfr/dockgit-rocket-filter" \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.vcs-url=$VCS_URL \
-      org.label-schema.schema-version="1.0"
+      org.label-schema.schema-version="1.0" \
+      maintainer="Jean-Christophe Fillion-Robin <jchris.fillionr@kitware.com>"
