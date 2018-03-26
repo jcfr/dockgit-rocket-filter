@@ -17,7 +17,8 @@ build:
 		--build-arg VCS_URL=`git config --get remote.origin.url` \
 		--build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
 		-t $(ORG)/$(REPO) .
-	if [ -n "$(IMAGEID)" ]; then $(DOCKER) rmi "$(IMAGEID)"; fi
+	CURRENT_IMAGEID=$$($(DOCKER) images -q $(ORG)/$(REPO)) && \
+	if [ -n "$(IMAGEID)" ] && [ "$(IMAGEID)" != "$$CURRENT_IMAGEID" ]; then $(DOCKER) rmi "$(IMAGEID)"; fi
 
 push:
 	docker push $(ORG)/$(REPO)
