@@ -18,7 +18,7 @@ build:
 		--build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
 		-t $(ORG)/$(REPO) .
 	CURRENT_IMAGEID=$$($(DOCKER) images -q $(ORG)/$(REPO)) && \
-	if [ -n "$(IMAGEID)" ] && [ "$(IMAGEID)" != "$$CURRENT_IMAGEID" ]; then $(DOCKER) rmi "$(IMAGEID)"; fi
+	if [ -n "$(IMAGEID)" ] && [ "$(IMAGEID)" != "$$CURRENT_IMAGEID" ]; then $(DOCKER) rmi "$(IMAGEID)" || true; fi
 
 push:
 	docker push $(ORG)/$(REPO)
